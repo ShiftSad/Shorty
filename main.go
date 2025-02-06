@@ -7,11 +7,16 @@ import (
 func main() {
 	r := gin.Default()
 
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
+	r.GET(":short", redirectURL)
+	r.POST("/shorten", shortenURL)
 
 	r.Run("localhost:8080")
+}
+
+func redirectURL(c *gin.Context) {
+
+}
+
+func shortenURL(c *gin.Context) {
+
 }
