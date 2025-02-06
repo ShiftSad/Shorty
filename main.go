@@ -2,8 +2,9 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"os"
 
-	"gorm.io/driver/sqlite"
+	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
@@ -17,8 +18,10 @@ var db *gorm.DB
 
 func main() {
 	// Initialize the database
+	dsn := os.Getenv("DSN")
+
 	var err error
-	db, err = gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
+	db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic("Failed to connect database")
 	}
