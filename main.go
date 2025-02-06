@@ -2,16 +2,17 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"os"
-
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"math/rand"
+	"net/http"
+	"strings"
 )
 
 type Url struct {
-	gorm.Model
-	Short string `json:"short"`
-	Long  string `json:"long"`
+	ID    uint   `gorm:"primaryKey"`
+	Short string `gorm:"uniqueIndex"`
+	Long  string
 }
 
 var db *gorm.DB
@@ -40,22 +41,42 @@ func main() {
 
 func redirectURL(c *gin.Context) {
 	short := c.Param("short")
+	short = strings.ToLower(short)
 
 	var url Url
-	db.First(&url, "short = ?", short)
-
-	c.Redirect(301, url.Long)
-}
-
-func shortenURL(c *gin.Context) {
-	var url Url
-	err := c.BindJSON(&url)
-
-	if err != nil {
-		c.JSON(400, gin.H{"error": "Invalid request"})
+	if err := db.Where("short = ?", short).First(&url).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "URL not found"})
 		return
 	}
 
+	if !strings.HasPrefix(url.Long, "https://") && !strings.HasPrefix(url.Long, "http://") {
+		url.Long = "https://" + url.Long
+	}
+
+	c.Redirect(http.StatusMovedPermanently, url.Long)
+}
+
+func shortenURL(c *gin.Context) {
+	var request struct {
+		URL string `json:"url"`
+	}
+	if err := c.ShouldBindJSON(&request); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request"})
+		return
+	}
+
+	shortCode := generateShortCode()
+	url := Url{Short: shortCode, Long: request.URL}
+
 	db.Create(&url)
-	c.JSON(200, gin.H{"short": url.Short})
+}
+
+// Return a random 6 character string
+func generateShortCode() string {
+	charset := "abcdefghijklmnopqrstuvwxyz0123456789"
+	shortCode := make([]byte, 6)
+	for i := range shortCode {
+		shortCode[i] = charset[rand.Intn(len(charset))]
+	}
+	return string(shortCode)
 }
