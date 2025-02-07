@@ -18,6 +18,22 @@ type Url struct {
 	Long  string
 }
 
+// blacklist urls
+var blacklistLong = []string{
+	"localhost",
+}
+
+// blacklist short urls
+var blacklistShort = []string{
+	"",
+	"script.js",
+	"styles.css",
+	"favicon.ico",
+	"robots.txt",
+	"index.html",
+	"shorten",
+}
+
 var db *gorm.DB
 
 func main() {
@@ -37,7 +53,15 @@ func main() {
 	// Initialize the router
 	r := gin.Default()
 
-	r.Static("/", "./static")
+	r.GET("/", func(c *gin.Context) {
+		c.File("./static/index.html")
+	})
+	r.GET("/script.js", func(c *gin.Context) {
+		c.File("./static/script.js")
+	})
+	r.GET("/styles.css", func(c *gin.Context) {
+		c.File("./static/styles.css")
+	})
 
 	r.GET(":short", redirectURL)
 	r.POST("/shorten", shortenURL)
@@ -74,6 +98,22 @@ func shortenURL(c *gin.Context) {
 	shortCode := generateShortCode()
 	if request.Custom != "" {
 		shortCode = request.Custom
+	}
+
+	// Check if the long URL is in the blacklist
+	for _, blacklisted := range blacklistLong {
+		if strings.Contains(request.URL, blacklisted) {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "URL is blacklisted"})
+			return
+		}
+	}
+
+	// Check if the short code is in the blacklist
+	for _, blacklisted := range blacklistShort {
+		if shortCode == blacklisted {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Custom short code is blacklisted"})
+			return
+		}
 	}
 
 	// Check if the short code is already in use
