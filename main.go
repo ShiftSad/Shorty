@@ -11,6 +11,7 @@ import (
 )
 
 type Url struct {
+	gorm.Model
 	ID    uint   `gorm:"primaryKey"`
 	Short string `gorm:"uniqueIndex"`
 	Long  string
@@ -42,7 +43,6 @@ func main() {
 
 func redirectURL(c *gin.Context) {
 	short := c.Param("short")
-	short = strings.ToLower(short)
 
 	var url Url
 	if err := db.Where("short = ?", short).First(&url).Error; err != nil {
@@ -59,7 +59,8 @@ func redirectURL(c *gin.Context) {
 
 func shortenURL(c *gin.Context) {
 	var request struct {
-		URL string `json:"url"`
+		URL    string `json:"url"`
+		Custom string `json:"custom"`
 	}
 	if err := c.ShouldBindJSON(&request); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request"})
@@ -67,14 +68,26 @@ func shortenURL(c *gin.Context) {
 	}
 
 	shortCode := generateShortCode()
-	url := Url{Short: shortCode, Long: request.URL}
+	if request.Custom != "" {
+		shortCode = request.Custom
+	}
+
+	// Check if the short code is already in use
+	var url Url
+	if err := db.Where("short = ?", shortCode).First(&url).Error; err == nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Custom short code already in use"})
+		return
+	}
+
+	url = Url{Short: shortCode, Long: request.URL}
 
 	db.Create(&url)
+	c.JSON(http.StatusOK, gin.H{"short": shortCode})
 }
 
 // Return a random 6 character string
 func generateShortCode() string {
-	charset := "abcdefghijklmnopqrstuvwxyz0123456789"
+	charset := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 	shortCode := make([]byte, 6)
 	for i := range shortCode {
 		shortCode[i] = charset[rand.Intn(len(charset))]

@@ -1,0 +1,8 @@
+// Shorten new URL: https://youtu.be/1
+POST http://localhost:8080/shorten
+Content-Type: application/json
+
+{
+  "url": "https://www.youtube.com/watch?v=q1zghT83P0I",
+  "custom": "teste"
+}
