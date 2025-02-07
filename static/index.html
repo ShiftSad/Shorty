@@ -5,25 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Shorty</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="favicon.ico">
 </head>
 <body>
-    <script src="script.js"></script>
 
-    <header>
-        <div id="logo">
-            <a href="https://www.shorty.laranjaazul.online/" class="logo">Shorty</a>
-        </div>
-    </header>
+<header>
+    <div id="logo">
+        <a href="https://shorty.laranjaazul.online/" class="logo">Shorty</a>
+    </div>
+</header>
 
-    <main>
-        <section id="urlbox">
-            <h1>Paste the URL to be shortened</h1>
-            <form method="post">
-                <label for="shortenInput"></label><input type="url" id="shortenInput" placeholder="https://looooong.url/">
-                <button type="submit" id="shortenButton">Shorten</button>
-            </form>
-            <button id="shortAnotherButton">Short Another Link</button>
-        </section>
-    </main>
+<main>
+    <section id="urlbox">
+        <h1>Paste the URL to be shortened</h1>
+        <form method="post">
+            <div class="form-items">
+                <div class="inputs">
+                    <label for="shortenInput"></label><input type="url" id="shortenInput" placeholder="https://looooong.url/">
+                    <label for="customInput"></label><input type="text" id="customInput" placeholder="Custom alias (optional)">
+                </div>
+                <div class="buttons">
+                    <button type="submit" id="shortenButton">Shorten</button>
+                </div>
+            </div>
+        </form>
+        <button id="shortAnotherButton">Short Another Link</button>
+    </section>
+</main>
 </body>
 </html>

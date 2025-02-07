@@ -64,6 +64,9 @@ func main() {
 	r.GET("/styles.css", func(c *gin.Context) {
 		c.File("./static/styles.css")
 	})
+	r.GET("/favicon.ico", func(c *gin.Context) {
+		c.File("./static/favicon.ico")
+	})
 
 	r.GET(":short", redirectURL)
 	r.POST("/shorten", shortenURL)

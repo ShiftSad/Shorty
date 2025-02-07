@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
     const shortenButton = document.getElementById("shortenButton");
     const shortenInput = document.getElementById("shortenInput");
+    const customInput = document.getElementById("customInput");
     const shortAnotherButton = document.getElementById("shortAnotherButton");
 
     shortenButton.addEventListener("click", async function(event) {
@@ -31,6 +32,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     async function shorten() {
         const url = shortenInput.value.trim();
+        const custom = customInput.value.trim();
         if (url === "") {
             return;
         }
@@ -40,6 +42,11 @@ document.addEventListener("DOMContentLoaded", function() {
         if (!urlRegex.test(url)) {
             shortenInput.value = "Invalid URL";
             return;
+        }
+
+        const payload = { url };
+        if (custom !== "") {
+            payload.custom = custom;
         }
 
         try {
@@ -59,7 +66,8 @@ document.addEventListener("DOMContentLoaded", function() {
             }
 
             // get current website domain
-            shortenInput.value = "https://" + window.location.hostname + ":" + window.location.port + "/" + data["short"];
+            const port = window.location.port ? ":" + window.location.port : "";
+            shortenInput.value = "https://" + window.location.hostname + port + window.location.port + "/" + data["short"];
             shortenButton.innerText = "Copy";
 
             shortAnotherButton.style.display = "inline-block";
