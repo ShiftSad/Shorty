@@ -19,8 +19,13 @@
         <section id="urlbox">
             <h1>Paste the URL to be shortened</h1>
             <form method="post">
-                <label for="shortenInput"></label><input type="url" id="shortenInput" placeholder="https://looooong.url/">
-                <button type="submit" id="shortenButton">Shorten</button>
+                <div class="inputs">
+                    <label for="shortenInput"></label><input type="url" id="shortenInput" placeholder="https://looooong.url/">
+                    <label for="customInput"></label><input type="text" id="customInput" placeholder="Custom alias (optional)">
+                </div>
+                <div class="buttons">
+                    <button type="submit" id="shortenButton">Shorten</button>
+                </div>
             </form>
             <button id="shortAnotherButton">Short Another Link</button>
         </section>
