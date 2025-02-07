@@ -24,15 +24,26 @@ body {
 
 main {
     width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 #urlbox {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    min-width: 350px;
+    max-width: 600px;
     text-align: center;
 }
 
 #urlbox h1 {
     margin-bottom: 1rem;
     font-size: 1.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 form {
