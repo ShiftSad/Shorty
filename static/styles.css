@@ -1,0 +1,67 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body centers its content both horizontally and vertically */
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+}
+
+#logo .logo {
+    font-size: 3rem;
+    color: #222;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+main {
+    width: 100%;
+}
+
+#urlbox {
+    text-align: center;
+}
+
+#urlbox h1 {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+form input[type="url"] {
+    padding: 0.5rem;
+    font-size: 1rem;
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 4px 0 0 4px;
+    outline: none;
+}
+
+form button {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-left: none;
+    background-color: #007BFF;
+    color: #fff;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
