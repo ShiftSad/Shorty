@@ -20,7 +20,9 @@ type Url struct {
 
 // blacklist urls
 var blacklistLong = []string{
-	"localhost",
+	"localhost:",
+	"127.0.0.1:",
+	"192.168.",
 }
 
 // blacklist short urls
@@ -39,8 +41,8 @@ var db *gorm.DB
 func main() {
 	// Initialize the database
 	dsn := os.Getenv("DSN")
-	dsn = "postgresql://postgres:LBaCfmPwiGCNjvNjFToxnpLiQFjzfrvl@viaduct.proxy.rlwy.net:11698/railway"
 
+	log.Println("Connecting to database")
 	var err error
 	db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
@@ -66,7 +68,8 @@ func main() {
 	r.GET(":short", redirectURL)
 	r.POST("/shorten", shortenURL)
 
-	log.Fatal(r.Run("localhost:8080"))
+	log.Println("Server started on port 8080")
+	log.Fatal(r.Run("0.0.0.0:8080"))
 }
 
 func redirectURL(c *gin.Context) {
