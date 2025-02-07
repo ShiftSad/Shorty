@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"log"
 	"math/rand"
 	"net/http"
 	"os"
@@ -22,6 +23,7 @@ var db *gorm.DB
 func main() {
 	// Initialize the database
 	dsn := os.Getenv("DSN")
+	dsn = "postgresql://postgres:LBaCfmPwiGCNjvNjFToxnpLiQFjzfrvl@viaduct.proxy.rlwy.net:11698/railway"
 
 	var err error
 	db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
@@ -35,10 +37,12 @@ func main() {
 	// Initialize the router
 	r := gin.Default()
 
+	r.Static("/", "./static")
+
 	r.GET(":short", redirectURL)
 	r.POST("/shorten", shortenURL)
 
-	r.Run("localhost:8080")
+	log.Fatal(r.Run("localhost:8080"))
 }
 
 func redirectURL(c *gin.Context) {
