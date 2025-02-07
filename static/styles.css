@@ -50,14 +50,19 @@ main {
     text-overflow: ellipsis;
 }
 
-div.inputs {
+.form-items {
+    display: flex;
+    height: fit-content;
+    flex-direction: row;
+}
+
+.inputs {
     display: flex;
     flex-direction: column;
 }
 
-div.buttons {
-    display: block;
-    height: 100%;
+.buttons {
+    display: flex;
 }
 
 form {
