@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ url })
+                body: JSON.stringify({ url, custom })
             });
 
             const data = await response.json();
@@ -67,8 +67,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
             // get current website domain
             const port = window.location.port ? ":" + window.location.port : "";
-            shortenInput.value = "https://" + window.location.hostname + port + window.location.port + "/" + data["short"];
+            shortenInput.value = "https://" + window.location.hostname + port + "/" + data["short"];
             shortenButton.innerText = "Copy";
+            customInput.value = "";
 
             shortAnotherButton.style.display = "inline-block";
         } catch (error) {

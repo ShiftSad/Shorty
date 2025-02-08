@@ -50,7 +50,10 @@ func main() {
 	}
 
 	// Migrate the schema
-	db.AutoMigrate(&Url{})
+	err = db.AutoMigrate(&Url{})
+	if err != nil {
+		panic("Failed to migrate schema")
+	}
 
 	// Initialize the router
 	r := gin.Default()
