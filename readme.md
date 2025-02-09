@@ -11,12 +11,6 @@
 </p>
 <br/>
 
-# ![Shorty Logo](https://github.com/ShiftSad/Shorty/blob/master/upload/header.png)
-
-## 🚀 Try Live Now
-
-[**🔗 Click here to try it live!**](https://shorty.laranjaazul.online)
-
 ## ⚡ Introduction
 
 **Shorty** is a free, open-source URL shortening service. Designed to be blazingly fast™.
