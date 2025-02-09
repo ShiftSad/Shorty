@@ -25,6 +25,40 @@
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 
+## 🚀 How to Self-Host
+
+You can deploy this project on **Railway** with just one click:  
+
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/template/ie90_N?referralCode=H3NRbK)
+
+### Manual Setup
+
+1. **Clone the Repository**  
+   ```sh
+   git clone https://github.com/ShiftSad/Shorty.git
+   cd Shorty
+   ```
+
+2. **Set Up PostgreSQL**  
+   Ensure you have a PostgreSQL database running. Then, set the **DSN** (Data Source Name) environment variable with your PostgreSQL connection URL.
+
+   **On Linux/macOS:**
+   ```sh
+   export DSN="postgresql://postgres:pa$$word@localhost:5432/postgres"
+   ```
+
+   **On Windows (PowerShell):**
+   ```powershell
+   $env:DSN="postgresql://postgres:pa$$word@localhost:5432/postgres"
+   ```
+
+3. **Run the Application**  
+   ```sh
+   go run main.go
+   ```
+
+That's it! Your application should now be running locally. 🚀  
+
 ## 👀 Visuals
 
 ![Visuals](https://github.com/ShiftSad/Shorty/blob/master/upload/visual.png)
